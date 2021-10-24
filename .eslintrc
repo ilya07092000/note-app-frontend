@@ -4,7 +4,7 @@
     "es6": true,
     "node": true
   },
-  "extends": ["airbnb/base"],
+  "extends": ["airbnb/base", "plugin:import/typescript"],
   "rules": {
     "no-console": "off",
     "no-prototype-builtins": "off",
@@ -12,9 +12,11 @@
     "linebreak-style": 0,
     "import/prefer-default-export": "off",
     "import/newline-after-import": "off",
-    "import/extensions": ["error", "ignorePackages", {
+    "import/extensions": ["error", "always", {
       "js": "never",
-      "jsx": "never"
+      "jsx": "never",
+      "ts": "never",
+      "tsx": "never"
     }]
   }
 }
