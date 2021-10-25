@@ -1,5 +1,10 @@
 import React, { FC } from 'react';
+import Header from '../../common/components/Header';
 
-const Dashboard: FC = () => <h1>Dashboard</h1>;
+const Dashboard: FC = () => (
+  <>
+    <Header />
+  </>
+);
 
 export default Dashboard;
