@@ -1,12 +1,22 @@
 import React, { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Dashboard from './pages/dashboard';
-
+import DynamicLoader from './containers/DynamicLoader';
 import './assets/styles/main.scss';
+
+export const routes = [
+  {
+    name: 'home',
+    path: '/',
+    component: import('./pages/Home/index'),
+    isInSidebar: true,
+  },
+];
 
 const App: FC = () => (
   <Switch>
-    <Route exact path='/' component={Dashboard}/>
+    {routes.map(({ path, component }) => (
+      <Route exact path={path} render={() => <DynamicLoader component={component} />} key={path} />
+    ))}
   </Switch>
 );
 
