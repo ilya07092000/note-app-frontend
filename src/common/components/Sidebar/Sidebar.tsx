@@ -2,20 +2,25 @@ import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { routes } from '../../../App';
 
+import styles from './styles.module.scss';
+
 const Sidebar: FC = () => (
-  <aside>
-    {
-      routes
-        .filter((route) => route.isInSidebar)
-        .map((route) => (
-          <NavLink
-            key={route.path}
-            to={route.path}
-          >
-            {route.name}
-          </NavLink>
-        ))
-    }
+  <aside className={styles.aside}>
+    <div className={styles.asideInner}>
+      {
+        routes
+          .filter((route) => route.isInSidebar)
+          .map((route) => (
+            <NavLink
+              className={styles.link}
+              key={route.path}
+              to={route.path}
+            >
+              {route.name}
+            </NavLink>
+          ))
+      }
+    </div>
   </aside>
 );
 

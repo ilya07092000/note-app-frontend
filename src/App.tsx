@@ -5,7 +5,7 @@ import './assets/styles/main.scss';
 
 export const routes = [
   {
-    name: 'home',
+    name: 'Home',
     path: '/',
     component: import('./pages/Home/index'),
     isInSidebar: true,
