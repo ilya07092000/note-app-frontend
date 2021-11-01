@@ -1,0 +1,38 @@
+.note {
+  background: #f8f8f8;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 1px 1px 10px -3px rgba(0, 0, 0, .4);
+  cursor: pointer;
+  transition: box-shadow .1s linear;
+  &:hover {
+    box-shadow: 1px 1px 10px -3px rgba(0, 0, 0, .8);
+  }
+}
+
+.noteHeader {
+  display: flex;
+}
+
+.favorited {
+  width: 30px;
+}
+
+.noteInfo {
+  display: flex;
+  padding-right: 15px;
+  flex: 1;
+}
+
+.noteAvatar {
+  max-width: 80px;
+  width: 100%;
+}
+
+.noteData {
+  padding: 10px;
+}
+
+.noteContent {
+  padding: 20px 0 0 10px;
+}
