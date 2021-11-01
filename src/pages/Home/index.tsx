@@ -3,6 +3,8 @@ import { useQuery, gql } from '@apollo/client';
 import Note from '../../common/components/Note/Note';
 import Dashboard from '../../containers/Dashboard';
 
+import styles from './styles.module.scss';
+
 const GET_NOTES = gql`
   query noteFeed($cursor: String) {
     noteFeed(cursor: $cursor) {
@@ -36,15 +38,13 @@ const Home: FC = () => {
 
   return (
     <Dashboard isLoading={loading}>
-      {data?.noteFeed?.notes?.length
-        ? data.noteFeed.notes.map((note: any) => (
-            <Note
-              text={note.content}
-              author={note.author}
-              date={note.createdAt}
-            />
-        ))
-        : null}
+      <div className={styles.notes}>
+        {data?.noteFeed?.notes?.length
+          ? data.noteFeed.notes.map((note: any) => (
+              <Note text={note.content} author={note.author} date={note.createdAt} />
+          ))
+          : null}
+      </div>
     </Dashboard>
   );
 };
