@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
+import Note from '../../common/components/Note/Note';
 import Dashboard from '../../containers/Dashboard';
 
 const GET_NOTES = gql`
@@ -12,6 +13,9 @@ const GET_NOTES = gql`
         createdAt
         content
         favoriteCount
+        favoritedBy {
+          id
+        }
         author {
           username
           id
@@ -25,10 +29,22 @@ const GET_NOTES = gql`
 
 const Home: FC = () => {
   const { data, loading } = useQuery(GET_NOTES);
-  console.log(data);
+
+  useEffect(() => {
+    console.log(data?.noteFeed);
+  }, [data]);
+
   return (
     <Dashboard isLoading={loading}>
-      <h1>Home</h1>
+      {data?.noteFeed?.notes?.length
+        ? data.noteFeed.notes.map((note: any) => (
+            <Note
+              text={note.content}
+              author={note.author}
+              date={note.createdAt}
+            />
+        ))
+        : null}
     </Dashboard>
   );
 };
