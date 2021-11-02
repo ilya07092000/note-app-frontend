@@ -2,6 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import Note from '../../common/components/Note/Note';
 import Dashboard from '../../containers/Dashboard';
+import { INote } from '../../interfaces/INote';
 
 import styles from './styles.module.scss';
 
@@ -40,8 +41,14 @@ const Home: FC = () => {
     <Dashboard isLoading={loading}>
       <div className={styles.notes}>
         {data?.noteFeed?.notes?.length
-          ? data.noteFeed.notes.map((note: any) => (
-              <Note text={note.content} author={note.author} date={note.createdAt} id={note.id} />
+          ? data.noteFeed.notes.map((note: INote) => (
+              <Note
+                key={note.id}
+                text={note.content}
+                author={note.author}
+                date={note.createdAt}
+                id={note.id}
+              />
           ))
           : null}
       </div>

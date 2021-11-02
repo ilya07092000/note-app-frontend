@@ -2,13 +2,14 @@ import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ReactComponent as Star } from '../../../assets/images/icons/star.svg';
 import { ReactComponent as FilledStar } from '../../../assets/images/icons/filled-star.svg';
+import { IAuthor } from '../../../interfaces/IAuthor';
 
 import styles from './styles.module.scss';
 
 type INoteProps = {
-  author: string | number | any;
-  date: string | number | any;
-  text: string | number | any;
+  author: IAuthor;
+  date: string;
+  text: string;
   id: string;
 };
 
