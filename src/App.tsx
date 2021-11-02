@@ -10,6 +10,12 @@ export const routes = [
     component: import('./pages/Home/index'),
     isInSidebar: true,
   },
+  {
+    name: 'Note',
+    path: '/note/:id',
+    component: import('./pages/Note/index'),
+    isInSidebar: false,
+  },
 ];
 
 const App: FC = () => (
