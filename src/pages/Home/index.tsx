@@ -41,7 +41,7 @@ const Home: FC = () => {
       <div className={styles.notes}>
         {data?.noteFeed?.notes?.length
           ? data.noteFeed.notes.map((note: any) => (
-              <Note text={note.content} author={note.author} date={note.createdAt} />
+              <Note text={note.content} author={note.author} date={note.createdAt} id={note.id} />
           ))
           : null}
       </div>

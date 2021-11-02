@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { NavLink } from 'react-router-dom';
 import { ReactComponent as Star } from '../../../assets/images/icons/star.svg';
 import { ReactComponent as FilledStar } from '../../../assets/images/icons/filled-star.svg';
 
@@ -8,13 +9,14 @@ type INoteProps = {
   author: string | number | any;
   date: string | number | any;
   text: string | number | any;
+  id: string;
 };
 
 const isLogged = true;
 const isFavorited = true;
 
-const Note: FC<INoteProps> = ({ author, date, text }: any) => (
-  <div className={styles.note}>
+const Note: FC<INoteProps> = ({ author, date, text, id }) => (
+  <NavLink to={`note/${id}`} className={styles.note}>
     <div className={styles.noteHeader}>
       <div className={styles.noteInfo}>
         <img className={styles.noteAvatar} src={author.avatar} alt='avatar' />
@@ -28,7 +30,7 @@ const Note: FC<INoteProps> = ({ author, date, text }: any) => (
       ) : null}
     </div>
     <div className={styles.noteContent}>{text}</div>
-  </div>
+  </NavLink>
 );
 
 export default Note;
