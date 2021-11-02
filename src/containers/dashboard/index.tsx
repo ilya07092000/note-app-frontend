@@ -16,7 +16,7 @@ const Dashboard: FC<IDashboardProps> = ({ children, isLoading = false }) => (
     <main className={styles.main}>
       <div className={styles.mainInner}>
         <Sidebar />
-        <div className={styles.content}>
+        <div className={styles.contentWrap}>
           {isLoading ? (
             <div className={styles.loaderWrapper}>
               <div className={styles.loaderInner}>
@@ -24,7 +24,9 @@ const Dashboard: FC<IDashboardProps> = ({ children, isLoading = false }) => (
               </div>
             </div>
           ) : (
-            children
+            <div className={styles.content}>
+              {children}
+            </div>
           )}
         </div>
       </div>

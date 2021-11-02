@@ -5,11 +5,16 @@
   height: 100vh;
 }
 
+.contentWrap {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
 .content {
   position: relative;
   flex: 1;
   padding: 60px 20px 20px 20px;
-  height: 200vh;
   max-width: 1200px;
 }
 
