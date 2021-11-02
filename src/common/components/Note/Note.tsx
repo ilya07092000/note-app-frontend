@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import moment from 'moment';
 import { NavLink } from 'react-router-dom';
 import { ReactComponent as Star } from '../../../assets/images/icons/star.svg';
 import { ReactComponent as FilledStar } from '../../../assets/images/icons/filled-star.svg';
@@ -22,8 +23,8 @@ const Note: FC<INoteProps> = ({ author, date, text, id }) => (
       <div className={styles.noteInfo}>
         <img className={styles.noteAvatar} src={author.avatar} alt='avatar' />
         <div className={styles.noteData}>
-          <p>{author.username}</p>
-          <p>{date}</p>
+          <p className={styles.author}>{author.username}</p>
+          <p className={styles.date}>{moment(date).format('MMMM Do YYYY')}</p>
         </div>
       </div>
       {isLogged ? (
