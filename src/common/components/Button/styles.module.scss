@@ -1,0 +1,19 @@
+.btn {
+  cursor: pointer;
+  background: none;
+  outline: none;
+  &.small {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+
+  &.medium {
+    font-size: 18px;
+    padding: 10px 20px;
+  }
+
+  &.big {
+    font-size: 22px;
+    padding: 15px 30px;
+  }
+}
