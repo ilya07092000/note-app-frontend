@@ -20,7 +20,9 @@ const Dashboard: FC<IDashboardProps> = ({ children, isLoading = false }) => (
           {isLoading ? (
             <div className={styles.loaderWrapper}>
               <div className={styles.loaderInner}>
-                <Loader visible={isLoading} />
+                <div className={styles.loaderContainer}>
+                  <Loader visible={isLoading} />
+                </div>
               </div>
             </div>
           ) : (
