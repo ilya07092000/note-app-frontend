@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import Note from '../../common/components/Note/Note';
 import Dashboard from '../../containers/Dashboard';
@@ -33,18 +33,16 @@ const GET_NOTES = gql`
 
 const Home: FC = () => {
   const { data, loading, fetchMore } = useQuery(GET_NOTES);
-  const [isLoading, setIsLoading] = useState<boolean>(loading);
-
-  useEffect(() => setIsLoading(loading), [loading]);
+  const [isLoadingMore, seIsLoadingMore] = useState<boolean>(false);
 
   const getMoreNotes = useCallback(() => {
-    setIsLoading(true);
+    seIsLoadingMore(true);
     fetchMore({
       variables: {
         cursor: data.noteFeed.cursor,
       },
       updateQuery: (prevRes, { fetchMoreResult }) => {
-        setIsLoading(false);
+        seIsLoadingMore(false);
 
         return {
           noteFeed: {
@@ -59,10 +57,10 @@ const Home: FC = () => {
         };
       },
     });
-  }, [isLoading, data, fetchMore]);
+  }, [seIsLoadingMore, data, fetchMore]);
 
   return (
-    <Dashboard isLoading={isLoading}>
+    <Dashboard isLoading={loading}>
       <div className={styles.notesWrap}>
         <div className={styles.notes}>
           {data?.noteFeed?.notes?.length
@@ -79,7 +77,7 @@ const Home: FC = () => {
         </div>
         {data?.noteFeed?.hasNextPage ? (
           <div className={styles.loadMoreWrap} onClick={getMoreNotes} >
-            <Button>Load More</Button>
+            <Button isLoading={isLoadingMore}>Load More</Button>
           </div>
         ) : null}
       </div>
