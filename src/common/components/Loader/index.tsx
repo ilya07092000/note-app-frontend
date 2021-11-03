@@ -4,9 +4,10 @@ import styles from './styles.module.scss';
 
 type ILoaderProps = {
   visible: boolean;
+  color?: string;
 };
 
-const Loader: FC<ILoaderProps> = ({ visible = false }) =>
-  visible ? <div className={styles.loader}></div> : null;
+const Loader: FC<ILoaderProps> = ({ visible = false, color = '#fff' }) =>
+  visible ? <div className={styles.loader} style={{ color }}></div> : null;
 
 export default Loader;
