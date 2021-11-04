@@ -16,6 +16,18 @@ export const routes = [
     component: import('./pages/Note/index'),
     isInSidebar: false,
   },
+  {
+    name: 'Signup',
+    path: '/signup',
+    component: import('./pages/Signup/index'),
+    isInSidebar: false,
+  },
+  {
+    name: 'Signin',
+    path: '/signin',
+    component: import('./pages/SignIn/index'),
+    isInSidebar: false,
+  },
 ];
 
 const App: FC = () => (
