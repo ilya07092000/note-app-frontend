@@ -1,5 +1,6 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
+import { MainContext } from '../../common/context/main';
 import Note from '../../common/components/Note/Note';
 import Dashboard from '../../containers/Dashboard';
 import Button from '../../common/components/Button';
@@ -34,6 +35,12 @@ const GET_NOTES = gql`
 const Home: FC = () => {
   const { data, loading, fetchMore } = useQuery(GET_NOTES);
   const [isLoadingMore, seIsLoadingMore] = useState<boolean>(false);
+  const { state: { isAuth }, dispatch } = useContext(MainContext);
+
+  console.log(isAuth);
+  useEffect(() => {
+    dispatch({ type: 'LOGIN' });
+  }, []);
 
   const getMoreNotes = useCallback(() => {
     seIsLoadingMore(true);
@@ -48,10 +55,7 @@ const Home: FC = () => {
           noteFeed: {
             cursor: fetchMoreResult.noteFeed.cursor,
             hasNextPage: fetchMoreResult.noteFeed.hasNextPage,
-            notes: [
-              ...prevRes.noteFeed.notes,
-              ...fetchMoreResult.noteFeed.notes,
-            ],
+            notes: [...prevRes.noteFeed.notes, ...fetchMoreResult.noteFeed.notes],
             __typename: 'noteFeed',
           },
         };
@@ -76,7 +80,7 @@ const Home: FC = () => {
             : null}
         </div>
         {data?.noteFeed?.hasNextPage ? (
-          <div className={styles.loadMoreWrap} onClick={getMoreNotes} >
+          <div className={styles.loadMoreWrap} onClick={getMoreNotes}>
             <Button isLoading={isLoadingMore}>Load More</Button>
           </div>
         ) : null}
