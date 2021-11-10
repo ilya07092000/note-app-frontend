@@ -1,0 +1,19 @@
+.passwordIcon {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  width: 35px;
+  height: 35px;
+  transform: translateY(-50%);
+  transition: opacity .2s linear;
+  cursor: pointer;
+  padding: 5px;
+  & svg {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.passwordInput {
+  padding-right: 40px;
+}
