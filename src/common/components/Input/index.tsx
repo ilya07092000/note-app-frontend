@@ -3,14 +3,15 @@ import combineCss from '../../helpers/combineCss';
 
 import styles from './styles.module.scss';
 
-type IInputProps = {
+export type IInputProps = {
   name: string;
   id: string;
   label?: string;
   initialValue?: string;
-  type?: string;
   classList?: string[];
   icon?: any;
+  placeholder?: string;
+  type?: 'text' | 'password';
 };
 
 const Input: FC<IInputProps> = ({
@@ -18,23 +19,32 @@ const Input: FC<IInputProps> = ({
   id,
   label = false,
   initialValue = '',
-  type = 'text',
   classList = [],
   icon = false,
-}) => (
-  <div className={styles.inputWrap}>
-    {
-      label && <label htmlFor={id} >{label}</label>
-    }
-    <input
-      className={combineCss([...classList, styles.input])}
-      name={name}
-      id={id}
-      defaultValue={initialValue}
-      type={type}
-    />
-    <img src={icon} />
-  </div>
-);
+  placeholder = '',
+  type = '',
+}) => {
+  console.log(type);
+  return (
+    <>
+      {label && (
+        <label className={styles.label} htmlFor={id}>
+          {label}
+        </label>
+      )}
+      <div className={styles.inputWrapper}>
+        <input
+          type={type}
+          className={combineCss([...classList, styles.input])}
+          name={name}
+          id={id}
+          defaultValue={initialValue}
+          placeholder={placeholder}
+        />
+        {React.isValidElement(icon) ? icon : null}
+      </div>
+    </>
+  );
+};
 
 export default Input;
