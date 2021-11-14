@@ -24,10 +24,6 @@ const useForm = (model: ModelForm) => {
    */
   const getFormErrors = (values: Record<string, string>) =>
     model.reduce((prev: any, current: any) => {
-      if (!values[current.name]) {
-        return { ...prev };
-      }
-
       if (current.required && !values[current.name]) {
         return { ...prev, [current.name]: 'required' };
       }
