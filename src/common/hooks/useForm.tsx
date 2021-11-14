@@ -8,10 +8,13 @@ const useForm = (model: ModelForm) => {
    */
   const getFormValues = ({ target }: React.BaseSyntheticEvent): Record<string, string> =>
     model.reduce(
-      (prev, current) => ({
-        ...prev,
-        [current.name]: target.elements[current.name].value,
-      }),
+      (prev, current) =>
+        target.elements[current.name]
+          ? {
+            ...prev,
+            [current.name]: target.elements[current.name].value,
+          }
+          : { ...prev },
       {},
     );
 
@@ -21,8 +24,27 @@ const useForm = (model: ModelForm) => {
    */
   const getFormErrors = (values: Record<string, string>) =>
     model.reduce((prev: any, current: any) => {
+      if (!values[current.name]) {
+        return { ...prev };
+      }
+
       if (current.required && !values[current.name]) {
         return { ...prev, [current.name]: 'required' };
+      }
+
+      if (current?.rules?.length) {
+        for (let i = 0; i < current.rules.length; i += 1) {
+          if (!values[current.name].match(current.rules[i].pattern)) {
+            return { ...prev, [current.name]: current.msg || `${current.name} is not valid` };
+          }
+        }
+      }
+
+      if (current.minLength && values[current.name].length < current.minLength) {
+        return {
+          ...prev,
+          [current.name]: `${current.name} must be longer than ${current.minLength} characters`,
+        };
       }
 
       return { ...prev };
