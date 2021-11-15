@@ -5,6 +5,7 @@ export interface IModelItem {
   required?: boolean;
   rules?: Rule[];
   minLength?: number;
+  ref?: string;
 }
 
 export type FormValidateResult = {
