@@ -1,40 +1,47 @@
-import React, { FC } from 'react';
+import React, { FC, lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import DynamicLoader from './containers/DynamicLoader';
 import './assets/styles/main.scss';
+import Signup from './pages/Signup/index';
+import Signin from './pages/SignIn/index';
+import withAuth from './common/hoc/withAuth';
+
+const Home = lazy(() => import('./pages/Home/index'));
+const Note = lazy(() => import('./pages/Note/index'));
 
 export const routes = [
   {
     name: 'Home',
     path: '/',
-    component: import('./pages/Home/index'),
+    component: withAuth(Home),
     isInSidebar: true,
   },
   {
     name: 'Note',
     path: '/note/:id',
-    component: import('./pages/Note/index'),
+    component: withAuth(Note),
     isInSidebar: false,
   },
   {
     name: 'Signup',
     path: '/signup',
-    component: import('./pages/Signup/index'),
+    component: Signup,
     isInSidebar: false,
   },
   {
     name: 'Signin',
     path: '/signin',
-    component: import('./pages/SignIn/index'),
+    component: Signin,
     isInSidebar: false,
   },
 ];
 
 const App: FC = () => (
   <Switch>
-    {routes.map(({ path, component }) => (
-      <Route exact path={path} render={() => <DynamicLoader component={component} />} key={path} />
-    ))}
+    <Suspense fallback={<div>Loading...</div>}>
+      {routes.map(({ path, component }) => (
+        <Route exact path={path} component={component} key={path} />
+      ))}
+    </Suspense>
   </Switch>
 );
 
