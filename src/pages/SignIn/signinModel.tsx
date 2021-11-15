@@ -16,11 +16,6 @@ const signinModel: ModelForm = [
     required: true,
     minLength: 6,
   },
-  {
-    name: 'bla',
-    required: true,
-    minLength: 6,
-  },
 ];
 
 export default signinModel;
