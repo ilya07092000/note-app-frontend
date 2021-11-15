@@ -1,5 +1,6 @@
 import React from 'react';
-import { ModelForm } from '../../interfaces/FormModel';
+import { ModelForm, IModelItem } from '../../interfaces/FormModel';
+import { patternMatchValidation } from '../helpers/inputValidation';
 
 const useForm = (model: ModelForm) => {
   /**
@@ -23,23 +24,36 @@ const useForm = (model: ModelForm) => {
    * @returns {object} errors
    */
   const getFormErrors = (values: Record<string, string>) =>
-    model.reduce((prev: any, current: any) => {
-      if (current.required && !values[current.name]) {
-        return { ...prev, [current.name]: 'required' };
+    model.reduce((prev, current: IModelItem) => {
+      const currFieldName = current.name;
+      const currFieldValue = values[currFieldName];
+
+      if (current.required && !currFieldValue) {
+        return { ...prev, [currFieldName]: 'required' };
       }
 
       if (current?.rules?.length) {
         for (let i = 0; i < current.rules.length; i += 1) {
-          if (!values[current.name].match(current.rules[i].pattern)) {
-            return { ...prev, [current.name]: current.msg || `${current.name} is not valid` };
+          if (!patternMatchValidation(currFieldValue, current.rules[i].pattern)) {
+            return {
+              ...prev,
+              [currFieldName]: current.rules[i].msg || `${currFieldName} is not valid`,
+            };
           }
         }
       }
 
-      if (current.minLength && values[current.name].length < current.minLength) {
+      if (current.minLength && currFieldValue.length < current.minLength) {
         return {
           ...prev,
-          [current.name]: `${current.name} must be longer than ${current.minLength} characters`,
+          [currFieldName]: `${currFieldName} must be longer than ${current.minLength} characters`,
+        };
+      }
+
+      if (current.ref && currFieldValue && values[current.ref] !== currFieldValue) {
+        return {
+          ...prev,
+          [currFieldName]: 'Confirm password does not match',
         };
       }
 
