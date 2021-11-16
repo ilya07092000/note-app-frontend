@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC } from 'react';
 import combineCss from '../../helpers/combineCss';
 import Loader from '../Loader';
 
@@ -21,19 +21,15 @@ const Button: FC<IButtonProps> = ({
   isLoading = false,
   classList = [],
 }) => {
-  const btnTypeStyles = useMemo(
-    () =>
-      ({
-        big: styles.big,
-        small: styles.small,
-        medium: styles.medium,
-      }[size]),
-    [size],
-  );
+  const btnTypeStyles = {
+    big: styles.big,
+    small: styles.small,
+    medium: styles.medium,
+  }[size];
 
   return (
     <button
-      className={combineCss([...classList, styles.btn, btnTypeStyles])}
+      className={combineCss([styles.btn, btnTypeStyles, ...classList])}
       onClick={onClick}
       disabled={isLoading}
     >
