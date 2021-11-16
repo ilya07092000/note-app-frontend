@@ -9,8 +9,9 @@
   cursor: pointer;
   padding: 5px;
   & svg {
-    width: 25px;
-    height: 25px;
+    max-width: 25px;
+    width: 100%;
+    height: auto;
   }
 }
 
