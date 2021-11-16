@@ -8,10 +8,10 @@ type ILinkProps = {
   to: string;
 };
 
-const Link: FC<ILinkProps> = ({ text, to }) => (
+const Link: FC<ILinkProps> = React.memo(({ text, to }) => (
   <NavLink activeClassName={styles.activeLink} className={styles.link} to={to}>
     {text}
   </NavLink>
-);
+));
 
 export default Link;
