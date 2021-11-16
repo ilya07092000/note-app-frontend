@@ -14,18 +14,17 @@ export type IInputProps = {
   type?: 'text' | 'password';
 };
 
-const Input: FC<IInputProps> = ({
-  name,
-  id,
-  label = false,
-  initialValue = '',
-  classList = [],
-  icon = false,
-  placeholder = '',
-  type = '',
-}) => {
-  console.log(type);
-  return (
+const Input: FC<IInputProps> = React.memo(
+  ({
+    name,
+    id,
+    label = false,
+    initialValue = '',
+    classList = [],
+    icon = false,
+    placeholder = '',
+    type = '',
+  }) => (
     <>
       {label && (
         <label className={styles.label} htmlFor={id}>
@@ -34,6 +33,7 @@ const Input: FC<IInputProps> = ({
       )}
       <div className={styles.inputWrapper}>
         <input
+          autoComplete='true'
           type={type}
           className={combineCss([...classList, styles.input])}
           name={name}
@@ -44,7 +44,7 @@ const Input: FC<IInputProps> = ({
         {React.isValidElement(icon) ? icon : null}
       </div>
     </>
-  );
-};
+  ),
+);
 
 export default Input;
