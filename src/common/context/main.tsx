@@ -10,16 +10,18 @@ interface IMain {
 
 const initState: IState = {
   isAuth: false,
+  user: null,
 };
 
 const MainContext = React.createContext({} as IMainContext);
 
 const MainContextProvider: FC<IMain> = ({ children }) => {
   const [state, dispatch] = useReducer(
+    // TODO fix action type
     (prevState: IState, action: IAction<TYPES>): IState => {
       switch (action.type) {
         case TYPES.LOGIN:
-          return { ...prevState, isAuth: true };
+          return { ...prevState, isAuth: true, user: action.payload.user };
         default:
           return state;
       }
