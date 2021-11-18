@@ -13,30 +13,19 @@
 
 .box {
   margin: auto;
-  max-width: 640px;
+  max-width: 320px;
   width: 100%;
   border: 1px solid rgb(201, 201, 201);
   background: #fff;
+  overflow: hidden;
+  border-radius: 2px;
 }
 
 .boxContent {
-  padding: 15px;
+  padding: 40px 15px 20px 15px;
 }
 
 .headerLinks {
   display: flex;
   justify-content: center;
-  & a {
-    transition: background .1s linear;
-  }
-  &:hover a {
-    background: #cdcdcd;
-  } 
 }
-
-.headerLinks a:hover,
-.headerLinks a:hover ~ a
-.headerLinks a:hover + a {
-  background: #fff;
-}
-
