@@ -10,7 +10,7 @@ type IButtonProps = {
   onClick?: () => void;
   size?: 'big' | 'small' | 'medium';
   isLoading?: boolean;
-  classList?: string[];
+  classList?: string;
 };
 
 const Button: FC<IButtonProps> = ({
@@ -19,7 +19,7 @@ const Button: FC<IButtonProps> = ({
   onClick,
   size = 'medium',
   isLoading = false,
-  classList = [],
+  classList = '',
 }) => {
   const btnTypeStyles = {
     big: styles.big,
@@ -29,7 +29,7 @@ const Button: FC<IButtonProps> = ({
 
   return (
     <button
-      className={combineCss([styles.btn, btnTypeStyles, ...classList])}
+      className={combineCss([styles.btn, btnTypeStyles, classList])}
       onClick={onClick}
       disabled={isLoading}
     >
