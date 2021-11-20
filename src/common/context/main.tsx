@@ -22,6 +22,8 @@ const MainContextProvider: FC<IMain> = ({ children }) => {
       switch (action.type) {
         case TYPES.LOGIN:
           return { ...prevState, isAuth: true, user: action.payload.user };
+        case TYPES.EXIT:
+          return { ...prevState, isAuth: false, user: null };
         default:
           return state;
       }
