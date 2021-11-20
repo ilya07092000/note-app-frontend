@@ -7,10 +7,12 @@ import App from './App';
 
 const url = process.env.REACT_APP_API_URL;
 const cache = new InMemoryCache();
+const token = localStorage.getItem('token');
 
 const client = new ApolloClient({
   uri: url,
   cache,
+  headers: { authorization: token || '' },
   connectToDevTools: true,
 });
 
