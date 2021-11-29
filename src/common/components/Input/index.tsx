@@ -12,6 +12,7 @@ export type IInputProps = {
   icon?: any;
   placeholder?: string;
   type?: 'text' | 'password';
+  required?: boolean;
 };
 
 const Input: FC<IInputProps> = React.memo(
@@ -23,7 +24,8 @@ const Input: FC<IInputProps> = React.memo(
     classList = [],
     icon = false,
     placeholder = '',
-    type = '',
+    type = 'text',
+    required = false,
   }) => (
     <>
       {label && (
@@ -33,6 +35,7 @@ const Input: FC<IInputProps> = React.memo(
       )}
       <div className={styles.inputWrapper}>
         <input
+          required={required}
           autoComplete='true'
           type={type}
           className={combineCss([...classList, styles.input])}
