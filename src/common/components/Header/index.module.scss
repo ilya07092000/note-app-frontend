@@ -3,8 +3,22 @@
   box-shadow: 0 5px 22px -5px rgba(0, 0, 0, .3s);
   position: relative;
   z-index: 2;
+  background: #f3e0dd69;
 }
 
 .title {
-  font-size: 20px;
+  font-size: 24px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-shadow: 0 0 15px #404040;
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+}
+
+.dropdownWrap {
+  margin-left: auto;
 }
