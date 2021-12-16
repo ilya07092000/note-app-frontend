@@ -32,7 +32,6 @@ const Signup: FC = () => {
 
   const [signin, { loading }]: any = useMutation(SIGN_IN, {
     onCompleted: ({ signin }) => {
-      console.log(signin);
       if (signin.token && signin.user) {
         localStorage.setItem('token', signin.token);
         dispatch({ type: TYPES.LOGIN, payload: { user: signin.user } });
