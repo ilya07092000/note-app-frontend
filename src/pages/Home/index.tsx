@@ -1,6 +1,6 @@
-import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { MainContext } from '../../common/context/main';
+// import { MainContext } from '../../common/context/main';
 import Note from '../../common/components/Note/Note';
 import Dashboard from '../../containers/Dashboard';
 import Button from '../../common/components/Button';
@@ -33,16 +33,15 @@ const GET_NOTES = gql`
 `;
 
 const Home: FC = () => {
-  const { data, loading, fetchMore } = useQuery(GET_NOTES);
+  const { data, loading, fetchMore, refetch } = useQuery(GET_NOTES);
   const [isLoadingMore, seIsLoadingMore] = useState<boolean>(false);
-  const { state: { isAuth }, dispatch } = useContext(MainContext);
 
-  console.log(isAuth);
   useEffect(() => {
-    dispatch({ type: 'LOGIN' });
+    refetch();
   }, []);
 
-  const getMoreNotes = useCallback(() => {
+  const getMoreNotes = () => {
+    console.log(data);
     seIsLoadingMore(true);
     fetchMore({
       variables: {
@@ -61,13 +60,15 @@ const Home: FC = () => {
         };
       },
     });
-  }, [seIsLoadingMore, data, fetchMore]);
+  };
+
+  const isNotesInData:boolean = !!data?.noteFeed?.notes?.length;
 
   return (
     <Dashboard isLoading={loading}>
       <div className={styles.notesWrap}>
         <div className={styles.notes}>
-          {data?.noteFeed?.notes?.length
+          {isNotesInData
             ? data.noteFeed.notes.map((note: INote) => (
                 <Note
                   key={note.id}
