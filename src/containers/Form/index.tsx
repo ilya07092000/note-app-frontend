@@ -3,12 +3,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Item from './Item/index';
 import { useForm } from '../../common/hooks/useForm';
 import { ModelForm, FormValidateResult } from '../../interfaces/FormModel';
+import ErrorBox from './ErrorBox';
 
 interface IFormProps {
   children: React.ReactElement;
   name: string;
   model: ModelForm;
   onSubmit: (values: FormValidateResult) => void;
+  errorMsg?: string;
 }
 
 interface IFormContext {
@@ -17,7 +19,7 @@ interface IFormContext {
 
 export const FormContext = React.createContext({} as IFormContext);
 
-const Form = ({ children, name = '', onSubmit, model }: IFormProps) => {
+const Form = ({ children, name = '', onSubmit, model, errorMsg = '' }: IFormProps) => {
   const validateForm = useForm(model);
   const [errors, setErrors] = useState({});
 
@@ -31,7 +33,10 @@ const Form = ({ children, name = '', onSubmit, model }: IFormProps) => {
 
   return (
     <form name={name} onSubmit={submitHandler}>
-      <FormContext.Provider value={{ errors }}>{children}</FormContext.Provider>
+      <FormContext.Provider value={{ errors }}>
+        <ErrorBox msg={errorMsg} />
+        {children}
+      </FormContext.Provider>
     </form>
   );
 };
