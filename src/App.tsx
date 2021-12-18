@@ -11,6 +11,7 @@ import { ACTION_TYPES as TYPES } from './interfaces/MainContext/IActionTypes';
 
 const Home = lazy(() => import('./pages/Home/index'));
 const Note = lazy(() => import('./pages/Note/index'));
+const CreateNote = lazy(() => import('./pages/CreateNote/index'));
 
 export const routes = [
   {
@@ -24,6 +25,12 @@ export const routes = [
     path: '/note/:id',
     component: withAuth(Note),
     isInSidebar: false,
+  },
+  {
+    name: 'create-note',
+    path: '/create-note',
+    component: withAuth(CreateNote),
+    isInSidebar: true,
   },
   {
     name: 'Signup',
