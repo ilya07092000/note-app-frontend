@@ -7,4 +7,5 @@ export interface INote {
   createdAt: string;
   favoriteCount: number;
   favoritedBy: number[];
+  favorited: boolean;
 };

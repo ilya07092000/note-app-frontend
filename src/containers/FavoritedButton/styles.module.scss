@@ -1,0 +1,12 @@
+.favorited {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: background .1s linear;
+  &:hover {
+    background: #e5e5e5;
+  }
+}
