@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 import moment from 'moment';
 import { NavLink } from 'react-router-dom';
-import { ReactComponent as Star } from '../../../assets/images/icons/star.svg';
-import { ReactComponent as FilledStar } from '../../../assets/images/icons/filled-star.svg';
+import FavoritedButton from '../../../containers/FavoritedButton';
 import { IAuthor } from '../../../interfaces/IAuthor';
 
 import styles from './styles.module.scss';
 
 type INoteProps = {
+  favorited: boolean;
   author: IAuthor;
   date: string;
   text: string;
@@ -15,9 +15,8 @@ type INoteProps = {
 };
 
 const isLogged = true;
-const isFavorited = true;
 
-const Note: FC<INoteProps> = ({ author, date, text, id }) => (
+const Note: FC<INoteProps> = ({ favorited = false, author, date, text, id }) => (
   <NavLink to={`note/${id}`} className={styles.note}>
     <div className={styles.noteHeader}>
       <div className={styles.noteInfo}>
@@ -28,7 +27,7 @@ const Note: FC<INoteProps> = ({ author, date, text, id }) => (
         </div>
       </div>
       {isLogged ? (
-        <div className={styles.favorited}>{isFavorited ? <FilledStar /> : <Star />}</div>
+        <FavoritedButton favorited={favorited} />
       ) : null}
     </div>
     <div className={styles.noteContent}>{text}</div>
