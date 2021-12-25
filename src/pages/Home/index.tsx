@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
-// import { MainContext } from '../../common/context/main';
+import { MainContext } from '../../common/context/main';
 import Note from '../../common/components/Note/Note';
 import Dashboard from '../../containers/Dashboard';
 import Button from '../../common/components/Button';
@@ -35,6 +35,8 @@ const GET_NOTES = gql`
 const Home: FC = () => {
   const { data, loading, fetchMore, refetch } = useQuery(GET_NOTES);
   const [isLoadingMore, seIsLoadingMore] = useState<boolean>(false);
+  const { state: { user } } = useContext(MainContext);
+  console.log(user);
 
   useEffect(() => {
     refetch();
@@ -71,6 +73,7 @@ const Home: FC = () => {
           {isNotesInData
             ? data.noteFeed.notes.map((note: INote) => (
                 <Note
+                  favorited={note.favorited}
                   key={note.id}
                   text={note.content}
                   author={note.author}
