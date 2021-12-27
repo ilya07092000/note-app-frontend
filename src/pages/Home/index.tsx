@@ -17,6 +17,7 @@ const GET_NOTES = gql`
         id
         createdAt
         content
+        favorited
         favoriteCount
         favoritedBy {
           id
