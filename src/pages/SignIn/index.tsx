@@ -1,6 +1,7 @@
+/* eslint-disable import/no-unresolved */
 import { FC, useState, useContext, useEffect } from 'react';
-import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router';
+import { useSigninMutation } from 'src/generated/graphql';
 import EnterBox from '../../common/components/EnterBox';
 import Form from '../../containers/Form/index';
 import Input from '../../common/components/Input/index';
@@ -8,7 +9,6 @@ import PasswordInput from '../../common/components/PasswordInput/index';
 import Button from '../../common/components/Button/index';
 import signinModel from './signinModel';
 import { FormValidateResult } from '../../interfaces/FormModel';
-import { SIGN_IN } from '../../common/graphql/user/signin';
 import { ACTION_TYPES as TYPES } from '../../interfaces/MainContext/IActionTypes';
 import { MainContext } from '../../common/context/main';
 
@@ -30,7 +30,7 @@ const Signup: FC = () => {
   const { dispatch, state: { isAuth } } = useContext(MainContext);
   const history = useHistory();
 
-  const [signin, { loading }]: any = useMutation(SIGN_IN, {
+  const [signin, { loading }]: any = useSigninMutation({
     onCompleted: ({ signin }) => {
       if (signin.token && signin.user) {
         localStorage.setItem('token', signin.token);

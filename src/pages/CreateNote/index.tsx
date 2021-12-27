@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react';
-import { useMutation } from '@apollo/client';
+import { useNewNoteMutation } from '../../generated/graphql';
 import Dashboard from '../../containers/Dashboard';
 import Form from '../../containers/Form';
 import { noteModel } from './noteModel';
 import { FormValidateResult } from '../../interfaces/FormModel';
-import { CREATE_NOTE } from '../../common/graphql/note/createNote';
 import Button from '../../common/components/Button';
 
 import styles from './styles.module.scss';
@@ -20,10 +19,10 @@ const newNote = () => {
     });
   }, []);
 
-  const [createNote, { loading }]: any = useMutation(CREATE_NOTE, {
-    onCompleted: ({ createNote }) => {
+  const [createNote, { loading }]: any = useNewNoteMutation({
+    onCompleted: (note) => {
       console.log('created');
-      console.log(createNote, loading);
+      console.log(note, loading);
     },
   });
 

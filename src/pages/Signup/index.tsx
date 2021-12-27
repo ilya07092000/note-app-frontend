@@ -1,6 +1,6 @@
 import { FC, useContext, useEffect, useState } from 'react';
-import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router';
+import { useSignupMutation } from '../../generated/graphql';
 import EnterBox from '../../common/components/EnterBox';
 import Form from '../../containers/Form/index';
 import Input from '../../common/components/Input/index';
@@ -8,7 +8,6 @@ import PasswordInput from '../../common/components/PasswordInput/index';
 import Button from '../../common/components/Button/index';
 import signupModel from './signupModel';
 import { FormValidateResult } from '../../interfaces/FormModel';
-import { SIGN_UP } from '../../common/graphql/user/signup';
 import { MainContext } from '../../common/context/main';
 import { ACTION_TYPES as TYPES } from '../../interfaces/MainContext/IActionTypes';
 
@@ -40,7 +39,7 @@ const Signup: FC = () => {
     }
   }, [isAuth]);
 
-  const [signUp, { loading }]: any = useMutation(SIGN_UP, {
+  const [signUp, { loading }]: any = useSignupMutation({
     onCompleted: ({ signup }) => {
       if (signup.token && signup.user) {
         localStorage.setItem('token', signup.token);
