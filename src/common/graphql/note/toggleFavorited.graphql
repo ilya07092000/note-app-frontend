@@ -1,0 +1,6 @@
+mutation toggleFavorite($id: ID!) {
+  toggleFavorite(id: $id) {
+    id
+    favorited
+  }
+}
