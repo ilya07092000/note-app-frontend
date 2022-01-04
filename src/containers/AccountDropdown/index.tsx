@@ -48,7 +48,7 @@ const AccountDropdown = () => {
         <div
           data-dropdown-body
           ref={dropdownRef}
-          className={combineCss([styles.body, closeAnimation ? styles['close-animation'] : ''])}
+          className={combineCss([styles.body, closeAnimation ? styles['close-animation'] : '', 'dropdown-body'])}
         >
           <div className={styles.inner}>
             <p className={styles.username}>{user?.username}</p>
