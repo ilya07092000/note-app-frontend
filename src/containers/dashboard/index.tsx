@@ -4,33 +4,34 @@ import Header from '../../common/components/Header';
 import Sidebar from '../../common/components/Sidebar/Sidebar';
 
 import styles from './styles.module.scss';
+import Title from './Title';
 
 export type IDashboardProps = {
   children: any;
   isLoading?: boolean;
+  pageName?: string;
 };
 
-const Dashboard: FC<IDashboardProps> = ({ children, isLoading = false }) => (
+const Dashboard: FC<IDashboardProps> = ({ children, isLoading = false, pageName = '' }) => (
   <div className={styles.page}>
     <Header />
     <main className={styles.main}>
-      <div className={styles.mainInner}>
-        <Sidebar />
-        <div className={styles.contentWrap}>
-          {isLoading ? (
-            <div className={styles.loaderWrapper}>
-              <div className={styles.loaderInner}>
-                <div className={styles.loaderContainer}>
-                  <Loader visible={isLoading} />
-                </div>
+      <Sidebar />
+      <div className={styles.contentWrap}>
+        {isLoading ? (
+          <div className={styles.loaderWrapper}>
+            <div className={styles.loaderInner}>
+              <div className={styles.loaderContainer}>
+                <Loader visible={isLoading} />
               </div>
             </div>
-          ) : (
-            <div className={styles.content}>
-              {children}
-            </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className={styles.content}>
+            {pageName ? <Title text={pageName} /> : null}
+            {children}
+          </div>
+        )}
       </div>
     </main>
   </div>
