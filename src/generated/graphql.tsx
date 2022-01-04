@@ -22,7 +22,7 @@ export type Mutation = {
   newNote: Note;
   signin: UserAuth;
   signup: UserAuth;
-  toggleFavorite: Note;
+  toggleFavorite: ToggleFavoritedAnswer;
   updateNote: Note;
 };
 
@@ -104,6 +104,12 @@ export type QueryUserArgs = {
   email: Scalars['String'];
 };
 
+export type ToggleFavoritedAnswer = {
+  __typename?: 'ToggleFavoritedAnswer';
+  favorited?: Maybe<Scalars['Boolean']>;
+  id: Scalars['ID'];
+};
+
 export type User = {
   __typename?: 'User';
   avatar: Scalars['String'];
@@ -126,6 +132,13 @@ export type NewNoteMutationVariables = Exact<{
 
 
 export type NewNoteMutation = { __typename?: 'Mutation', newNote: { __typename?: 'Note', content: string } };
+
+export type ToggleFavoriteMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type ToggleFavoriteMutation = { __typename?: 'Mutation', toggleFavorite: { __typename?: 'ToggleFavoritedAnswer', id: string, favorited?: boolean | null | undefined } };
 
 export type SigninMutationVariables = Exact<{
   email: Scalars['String'];
@@ -183,6 +196,40 @@ export function useNewNoteMutation(baseOptions?: Apollo.MutationHookOptions<NewN
 export type NewNoteMutationHookResult = ReturnType<typeof useNewNoteMutation>;
 export type NewNoteMutationResult = Apollo.MutationResult<NewNoteMutation>;
 export type NewNoteMutationOptions = Apollo.BaseMutationOptions<NewNoteMutation, NewNoteMutationVariables>;
+export const ToggleFavoriteDocument = gql`
+    mutation toggleFavorite($id: ID!) {
+  toggleFavorite(id: $id) {
+    id
+    favorited
+  }
+}
+    `;
+export type ToggleFavoriteMutationFn = Apollo.MutationFunction<ToggleFavoriteMutation, ToggleFavoriteMutationVariables>;
+
+/**
+ * __useToggleFavoriteMutation__
+ *
+ * To run a mutation, you first call `useToggleFavoriteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useToggleFavoriteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [toggleFavoriteMutation, { data, loading, error }] = useToggleFavoriteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useToggleFavoriteMutation(baseOptions?: Apollo.MutationHookOptions<ToggleFavoriteMutation, ToggleFavoriteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ToggleFavoriteMutation, ToggleFavoriteMutationVariables>(ToggleFavoriteDocument, options);
+      }
+export type ToggleFavoriteMutationHookResult = ReturnType<typeof useToggleFavoriteMutation>;
+export type ToggleFavoriteMutationResult = Apollo.MutationResult<ToggleFavoriteMutation>;
+export type ToggleFavoriteMutationOptions = Apollo.BaseMutationOptions<ToggleFavoriteMutation, ToggleFavoriteMutationVariables>;
 export const SigninDocument = gql`
     mutation signin($email: String!, $password: String!) {
   signin(email: $email, password: $password) {
