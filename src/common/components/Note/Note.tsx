@@ -23,12 +23,11 @@ const Note: FC<INoteProps> = ({ favorited = false, author, date, text, id }) => 
 
   const [toggleFavorite, { loading }]: any = useToggleFavoriteMutation({
     onCompleted: ({ toggleFavorite }) => {
-      console.log(toggleFavorite);
       setIsFavorired(() => toggleFavorite?.favorited || false);
     },
   });
 
-  const toggleFavoriteNote = (e: any) => {
+  const toggleFavoriteNote = (e: MouseEvent) => {
     e.preventDefault();
     toggleFavorite({
       variables: {
