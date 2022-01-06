@@ -6,10 +6,11 @@ import styles from './styles.module.scss';
 
 type IProps = {
   favorited: boolean;
+  onClick: any;
 };
 
-const FavoritedButton: FC<IProps> = ({ favorited = false }) => (
-  <div className={styles.favorited}>{favorited ? <FilledStar /> : <Star />}</div>
+const FavoritedButton: FC<IProps> = ({ favorited = false, onClick }) => (
+  <div onClick={onClick} className={styles.favorited}>{favorited ? <FilledStar /> : <Star />}</div>
 );
 
 export default FavoritedButton;
