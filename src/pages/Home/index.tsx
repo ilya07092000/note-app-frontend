@@ -34,9 +34,13 @@ const GET_NOTES = gql`
 `;
 
 const Home: FC = () => {
-  const { data, loading, fetchMore, refetch } = useQuery(GET_NOTES);
+  const { data, loading, fetchMore, refetch } = useQuery(GET_NOTES, {
+    notifyOnNetworkStatusChange: true,
+  });
   const [isLoadingMore, seIsLoadingMore] = useState<boolean>(false);
-  const { state: { user } } = useContext(MainContext);
+  const {
+    state: { user },
+  } = useContext(MainContext);
   console.log(user);
 
   useEffect(() => {
@@ -65,31 +69,29 @@ const Home: FC = () => {
     });
   };
 
-  const isNotesInData:boolean = !!data?.noteFeed?.notes?.length;
+  const isNotesInData: boolean = !!data?.noteFeed?.notes?.length;
 
   return (
-    <Dashboard isLoading={loading}>
-      <div className={styles.notesWrap}>
-        <div className={styles.notes}>
-          {isNotesInData
-            ? data.noteFeed.notes.map((note: INote) => (
-                <Note
-                  favorited={note.favorited}
-                  key={note.id}
-                  text={note.content}
-                  author={note.author}
-                  date={note.createdAt}
-                  id={note.id}
-                />
-            ))
-            : null}
-        </div>
-        {data?.noteFeed?.hasNextPage ? (
-          <div className={styles.loadMoreWrap} onClick={getMoreNotes}>
-            <Button isLoading={isLoadingMore}>Load More</Button>
-          </div>
-        ) : null}
+    <Dashboard isLoading={loading} pageName='notes'>
+      <div className={styles.notes}>
+        {isNotesInData
+          ? data.noteFeed.notes.map((note: INote) => (
+              <Note
+                favorited={note.favorited}
+                key={note.id}
+                text={note.content}
+                author={note.author}
+                date={note.createdAt}
+                id={note.id}
+              />
+          ))
+          : null}
       </div>
+      {data?.noteFeed?.hasNextPage ? (
+        <div className={styles.loadMoreWrap} onClick={getMoreNotes}>
+          <Button isLoading={isLoadingMore}>Load More</Button>
+        </div>
+      ) : null}
     </Dashboard>
   );
 };
