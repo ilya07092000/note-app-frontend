@@ -48,8 +48,8 @@ const Home: FC = () => {
   }, []);
 
   const getMoreNotes = () => {
-    console.log(data);
     seIsLoadingMore(true);
+
     fetchMore({
       variables: {
         cursor: data.noteFeed.cursor,
@@ -74,24 +74,27 @@ const Home: FC = () => {
   return (
     <Dashboard isLoading={loading} pageName='notes'>
       <div className={styles.notes}>
-        {isNotesInData
-          ? data.noteFeed.notes.map((note: INote) => (
-              <Note
-                favorited={note.favorited}
-                key={note.id}
-                text={note.content}
-                author={note.author}
-                date={note.createdAt}
-                id={note.id}
-              />
+        {isNotesInData ? (
+          data.noteFeed.notes.map((note: INote) => (
+            <Note
+              favorited={note.favorited}
+              key={note.id}
+              text={note.content}
+              author={note.author}
+              date={note.createdAt}
+              id={note.id}
+            />
           ))
-          : null}
+        ) : (
+          <p>We do not have any notes for you</p>
+        )}
       </div>
-      {data?.noteFeed?.hasNextPage ? (
+
+      {data?.noteFeed?.hasNextPage && (
         <div className={styles.loadMoreWrap} onClick={getMoreNotes}>
           <Button isLoading={isLoadingMore}>Load More</Button>
         </div>
-      ) : null}
+      )}
     </Dashboard>
   );
 };
