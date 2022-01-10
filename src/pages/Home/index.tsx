@@ -1,12 +1,8 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { MainContext } from '../../common/context/main';
-import Note from '../../common/components/Note/Note';
 import Dashboard from '../../containers/Dashboard';
-import Button from '../../common/components/Button';
-import { INote } from '../../interfaces/INote';
-
-import styles from './styles.module.scss';
+import Notes from '../../containers/Notes';
 
 const GET_NOTES = gql`
   query noteFeed($cursor: String) {
@@ -37,7 +33,7 @@ const Home: FC = () => {
   const { data, loading, fetchMore, refetch } = useQuery(GET_NOTES, {
     notifyOnNetworkStatusChange: true,
   });
-  const [isLoadingMore, seIsLoadingMore] = useState<boolean>(false);
+  const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
   const {
     state: { user },
   } = useContext(MainContext);
@@ -47,15 +43,15 @@ const Home: FC = () => {
     refetch();
   }, []);
 
-  const getMoreNotes = () => {
-    seIsLoadingMore(true);
+  const getMoreNotes = useCallback(() => {
+    setIsLoadingMore(true);
 
     fetchMore({
       variables: {
         cursor: data.noteFeed.cursor,
       },
       updateQuery: (prevRes, { fetchMoreResult }) => {
-        seIsLoadingMore(false);
+        setIsLoadingMore(false);
 
         return {
           noteFeed: {
@@ -67,34 +63,17 @@ const Home: FC = () => {
         };
       },
     });
-  };
-
-  const isNotesInData: boolean = !!data?.noteFeed?.notes?.length;
+  }, [data]);
 
   return (
     <Dashboard isLoading={loading} pageName='notes'>
-      <div className={styles.notes}>
-        {isNotesInData ? (
-          data.noteFeed.notes.map((note: INote) => (
-            <Note
-              favorited={note.favorited}
-              key={note.id}
-              text={note.content}
-              author={note.author}
-              date={note.createdAt}
-              id={note.id}
-            />
-          ))
-        ) : (
-          <p>We do not have any notes for you</p>
-        )}
-      </div>
-
-      {data?.noteFeed?.hasNextPage && (
-        <div className={styles.loadMoreWrap} onClick={getMoreNotes}>
-          <Button isLoading={isLoadingMore}>Load More</Button>
-        </div>
-      )}
+      <Notes
+        data={data?.noteFeed.notes}
+        placeholder='We do not have any notes for you'
+        hasNextPage={data?.noteFeed.hasNextPage}
+        getMoreNotes={getMoreNotes}
+        isLoadingMore={isLoadingMore}
+      />
     </Dashboard>
   );
 };
