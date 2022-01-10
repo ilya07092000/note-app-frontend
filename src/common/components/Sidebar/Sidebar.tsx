@@ -4,7 +4,7 @@ import { routes } from '../../../App';
 
 import styles from './styles.module.scss';
 
-const Sidebar: FC = () => (
+const Sidebar: FC = React.memo(() => (
   <aside className={styles.aside}>
     <div className={styles.asideInner}>
       <ul>
@@ -26,6 +26,6 @@ const Sidebar: FC = () => (
       </ul>
     </div>
   </aside>
-);
+));
 
 export default Sidebar;

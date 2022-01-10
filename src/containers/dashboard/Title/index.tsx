@@ -6,6 +6,6 @@ interface ITtitleProps {
   text: string;
 }
 
-const Title = ({ text }: ITtitleProps) => <h1 className={styles.title}>{text}</h1>;
+const Title = React.memo(({ text }: ITtitleProps) => <h1 className={styles.title}>{text}</h1>);
 
 export default Title;

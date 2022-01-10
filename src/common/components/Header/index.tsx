@@ -4,7 +4,7 @@ import AccountDropdown from '../../../containers/AccountDropdown';
 
 import styles from './index.module.scss';
 
-const Header: FC = () => (
+const Header: FC = React.memo(() => (
   <header className={styles.header}>
     <div className={combineCss(['container'])}>
       <div className={styles.headerInner}>
@@ -15,6 +15,6 @@ const Header: FC = () => (
       </div>
     </div>
   </header>
-);
+));
 
 export default Header;

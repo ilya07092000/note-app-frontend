@@ -5,7 +5,7 @@ import { MainContext } from '../../common/context/main';
 import styles from './styles.module.scss';
 import Button from '../../common/components/Button';
 
-const AccountDropdown = () => {
+const AccountDropdown = React.memo(() => {
   const { dispatch, state: { user } } = useContext(MainContext);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [closeAnimation, setCloseAnimation] = useState(false);
@@ -58,6 +58,6 @@ const AccountDropdown = () => {
       ) : null}
     </div>
   );
-};
+});
 
 export default AccountDropdown;
